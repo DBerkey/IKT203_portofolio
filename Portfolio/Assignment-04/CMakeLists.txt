@@ -24,6 +24,10 @@ else()
       PRIVATE
         option2.cpp
         option2.h
+        Graph.cpp
+        Graph.h
+        MinHeap.cpp
+        MinHeap.h
     )
     target_compile_definitions(Assignment-04 PRIVATE "ASSIGNMENT_04_OPTION=2")
 endif()
