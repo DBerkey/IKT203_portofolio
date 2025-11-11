@@ -7,6 +7,7 @@
 // example run comands:
 // - "0" | & "C:\path\to\Portfolio\Assignment-04\Debug\Assignment-04.exe"
 // - "Bergen" | & "C:\path\to\Portfolio\Assignment-04\Debug\Assignment-04.exe"
+// & "C:\path\to\Portfolio\Assignment-04\Debug\Assignment-04.exe"
 
 #include <iostream>
 #include <limits>
@@ -20,7 +21,7 @@
 
 static constexpr std::string_view AssignmentOption = "Option 2 (Advanced): Inter-city Logistics Router.";
 
-// We'll keep a pointer to the graph so the C-style callbacks can populate it
+// A pointer to the graph so the C-style callbacks can populate it
 static Graph* g_graph = nullptr;
 
 // Callback used by readGraphFromFile to add nodes
@@ -66,7 +67,7 @@ static void Dijkstra(const Graph& graph, int source, std::vector<float>& outDist
 			{
 				outDist[v] = nd;
 				outPrev[v] = u;
-				heap.Push(v, nd); // insert improved distance
+				heap.Push(v, nd);
 			}
 		}
 	}
