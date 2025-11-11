@@ -1,6 +1,7 @@
 #pragma once
 #include <stdexcept> // For std::runtime_error
 #include <string>    // For std::to_string
+#include <type_traits> // For std::is_pointer
 
 // Linked List using TNode<T> class with constructor and destructor
 template <typename T>
@@ -35,10 +36,14 @@ TNode<T>::TNode(T aData) : data(aData), next(nullptr), prev(nullptr) {}
 // Destructor: Deletes the data pointer
 template <typename T>
 TNode<T>::~TNode() {
-	//Do not delete data, data may exist outside the list
-    data = nullptr; // Set data to nullptr to avoid dangling pointer
-    next = nullptr; // Set next to nullptr to avoid dangling pointer
-    prev = nullptr; // Set prev to nullptr to avoid dangling pointer
+    // Do not delete data here. The owning list (if any) is responsible for
+    // deleting managed data. For pointer types, clear the pointer to avoid
+    // accidental use-after-free; for non-pointer types this is a no-op.
+    if constexpr (std::is_pointer<T>::value) {
+        data = nullptr;
+    }
+    next = nullptr;
+    prev = nullptr;
 }
 
 // --- End of TNode class ---
@@ -71,6 +76,9 @@ public:
     TLinkedList(bool);
     // Destructor
     ~TLinkedList();
+    // Disable copy to avoid shallow copies that would double-free owned data
+    TLinkedList(const TLinkedList&) = delete;
+    TLinkedList& operator=(const TLinkedList&) = delete;
 
     // Core Linked List Operations
     template <typename TArgs>
