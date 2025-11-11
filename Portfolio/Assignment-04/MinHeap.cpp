@@ -1,13 +1,21 @@
+// Author: Douwe Berkeij
+// Date: 04-11-2025
+// AI use: for the making of this code there was made use of the GitHub Copilot AI tool.
+// to assist with debugging and writing code faster.
+// No full code was directly copied or generated with AI sources.
+
 #include "MinHeap.h"
 #include <utility>
 
 void MinHeap::Push(int key, float priority)
+// Inserts a new element with the given key and priority into the min-heap.
 {
     m_data.emplace_back(key, priority);
     HeapifyUp((int)m_data.size() - 1);
 }
 
 std::pair<int,float> MinHeap::Pop()
+// Removes and returns the element with the smallest priority from the min-heap.
 {
     if (m_data.empty()) return {-1, 0.0f};
     auto top = m_data.front();
@@ -18,6 +26,7 @@ std::pair<int,float> MinHeap::Pop()
 }
 
 void MinHeap::HeapifyUp(int idx)
+// Moves the element at index idx up to restore the heap property.
 {
     while (idx > 0)
     {
@@ -29,6 +38,7 @@ void MinHeap::HeapifyUp(int idx)
 }
 
 void MinHeap::HeapifyDown(int idx)
+// Moves the element at index idx down to restore the heap property.
 {
     int n = (int)m_data.size();
     while (true)
