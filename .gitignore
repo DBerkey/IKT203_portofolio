@@ -3,3 +3,6 @@
 
 # Ignore build/output directory
 out/
+
+# Ignore compiled object files
+build/
