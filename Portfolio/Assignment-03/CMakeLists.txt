@@ -16,8 +16,14 @@ add_executable(Assignment-03
     main.cpp
         Node.cpp
         Node.h
-        BST.cpp
-        BST.h
+        AVL.cpp
+        AVL.h
+        ExprNode.cpp
+        ExprNode.h
+        Parser.cpp
+        Parser.h
+        Interpreter.cpp
+        Interpreter.h
 )
 
 # Conditionally add the correct source file

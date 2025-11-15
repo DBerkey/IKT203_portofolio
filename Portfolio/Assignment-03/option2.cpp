@@ -1,32 +1,34 @@
 #include "option2.h"
-#include "BST.h"
+#include "Interpreter.h"
 #include <iostream>
 
+int RunApp()
+{
+	Interpreter interpreter;
 
-int RunApp() {
-	BST tree;
-	tree.Insert("C", 1);
-	tree.Insert("E", 2);
-	tree.Insert("A", 3);
-	tree.Insert("D", 4);
-	tree.Insert("F", 5);
-	tree.Insert("B", 6);
-	tree.Insert("G", 7);
+	std::cout << "Interpreted Calculator (AVL-backed)\n";
+	std::cout << "Enter expressions or assignments. Type 'exit' to quit.\n";
 
-	std::cout << "InOrder:\n";
-	tree.PrintInOrder();
+	std::string input;
 
-	std::cout << "\nPreOrder:\n";
-	tree.PrintPreOrder();
+	while (true)
+	{
+		std::cout << "> ";
+		std::getline(std::cin, input);
 
-	std::cout << "\nPostOrder:\n";
-	tree.PrintPostOrder();
+		if (input == "exit")
+			break;
 
-	Node* found = tree.Search("E");
-	if (found) {
-		std::cout << "\nFound E with value = " << found->GetData() << "\n";
+		try
+		{
+			double result = interpreter.Process(input);
+			std::cout << "= " << result << std::endl;
+		}
+		catch (const std::exception& ex)
+		{
+			std::cout << "Error: " << ex.what() << std::endl;
+		}
 	}
 
 	return 0;
 }
-
