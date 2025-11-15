@@ -1,15 +1,23 @@
-﻿set(CMAKE_CXX_STANDARD 17)
+﻿cmake_minimum_required(VERSION 3.20)
+project(Assignment-03)
+
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # "ON" = build Option 1, "OFF" = build Option 2.
-option(BUILD_ASSIGNMENT_03_OPTION_1 "Build Assignment Option 1 (Standard)" ON)
+option(BUILD_ASSIGNMENT_03_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
 
 add_executable(Assignment-03
     main.cpp
+        Node.cpp
+        Node.h
+        BST.cpp
+        BST.h
 )
 
 # Conditionally add the correct source file
@@ -30,10 +38,10 @@ else()
     )
     target_compile_definitions(Assignment-03 PRIVATE "ASSIGNMENT_03_OPTION=2")
 endif()
-target_link_libraries(Assignment-03
-    PRIVATE
-    SharedLib
-)
+#target_link_libraries(Assignment-03
+#    PRIVATE
+#    SharedLib
+#)
 
 
 add_custom_command(TARGET Assignment-03 POST_BUILD
