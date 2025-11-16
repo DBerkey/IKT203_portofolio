@@ -100,6 +100,7 @@ Node *AVL::Insert(Node *node, const std::string &key, double value) {
         node->SetRight(Insert(node->GetRight(), key, value));
     }
     else {
+        node->SetData(value);
         return node;
     }
 

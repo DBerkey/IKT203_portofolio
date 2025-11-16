@@ -16,7 +16,7 @@ class Parser {
     static std::vector<std::string> Tokenize(const std::string &input);
 
     static ExprNode *ExpressionTree(const std::vector<std::string> &postFixTokens);
-    static double EvaluateTree(ExprNode *root, AVL& symbolTable);
+    static double EvaluationTree(ExprNode *root, AVL& symbolTable);
 };
 
 

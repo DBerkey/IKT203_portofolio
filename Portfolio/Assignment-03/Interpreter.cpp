@@ -69,7 +69,7 @@ double Interpreter::Process(const std::string &input) {
         ExprNode *root = parser.ExpressionTree(postfix);
 
         // Evaluate
-        double value = parser.EvaluateTree(root, symbolTable);
+        double value = parser.EvaluationTree(root, symbolTable);
 
         // Store in AVL
         symbolTable.Insert(varName, value);
@@ -85,6 +85,8 @@ double Interpreter::Process(const std::string &input) {
     std::vector<std::string> postfix = parser.ToPostfix(tokens);
     ExprNode *root = parser.ExpressionTree(postfix);
 
-    return parser.EvaluateTree(root, symbolTable);
+    double result = parser.EvaluationTree(root, symbolTable);
+    Parser::FreeTree(root);
+    return result;
 
 }
