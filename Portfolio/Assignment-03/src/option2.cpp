@@ -1,5 +1,5 @@
-#include "option2.h"
-#include "Interpreter.h"
+#include "../include/option2.h"
+#include "../include/Interpreter.h"
 #include <iostream>
 #include <string>
 
@@ -17,10 +17,9 @@ int RunApp()
     std::cout << "To store a variable, use assignment:\n";
     std::cout << "    x = 10\n";
     std::cout << "    y = (x + 5) * 3^2\n";
-    std::cout << "Variables can be used in later expressions:\n";
-    std::cout << "    (y - x) / 2\n";
+    std::cout << "\n";
     std::cout << "To exit the program:  exit\n";
-    std::cout << "---------------------------------\n\n";
+    std::cout << "---------------------------------\n";
 
     while (true)
     {

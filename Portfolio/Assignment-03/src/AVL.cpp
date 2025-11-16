@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ostream>
-#include "AVL.h"
+#include "../include/AVL.h"
 
 AVL::AVL() : root(nullptr) {}
 
