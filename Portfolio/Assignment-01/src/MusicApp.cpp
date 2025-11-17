@@ -44,8 +44,7 @@ static void ShowMenu() {
 
 void MusicApp::start()
 {
-    std::string filename =
-        "C:\\Users\\safwa\\IKT203_portofolio\\DATA\\songs.txt";
+    std::string filename ="DATA/songs.txt";
 
     // Load songs from file into library
     ReadSongsFromFile(filename, SongReadCallback);
