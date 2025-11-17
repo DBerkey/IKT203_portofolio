@@ -2,7 +2,8 @@
 #include <string>
 #include <iostream>
 
-// Represents a song (track) in the library.
+
+// Represents a song track in the library.
 
 class Track {
 public:

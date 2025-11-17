@@ -1,31 +1,43 @@
 #include "Player.h"
 
-// Adds a track to the library
+
+//  Library Functions
+
+// Add a track to the main library (doubly-linked list)
 void Player::AddToLibrary(const Track& track) {
     library.push_back(track);
 }
 
-// Fills the main queue with all tracks from the library
+// Load the entire library into the Main Queue
 void Player::LoadToMainQueue() {
     for (const auto& t : library) {
         mainQueue.push(t);
     }
 }
 
-// Plays the next song:
-// 1. If WishQueue is not empty .. play from WishQueue
-// 2. Otherwise .. play from MainQueue
+
+
+//  Playback Logic — PLAY NEXT SONG
+
+
 void Player::PlayNextSong() {
+
+    // 1. WISH QUEUE ALWAYS PLAYS FIRST (one song only)
     if (!wishQueue.empty()) {
+
         Track t = wishQueue.front();
-        wishQueue.pop();
+        wishQueue.pop_front();
 
         std::cout << "\n Playing from WishQueue: ";
         t.Print();
 
         history.push(t);
+        return;   // Only ONE song each call
     }
-    else if (!mainQueue.empty()) {
+
+    // 2. If WishQueue empty ... play from MainQueue
+    if (!mainQueue.empty()) {
+
         Track t = mainQueue.front();
         mainQueue.pop();
 
@@ -33,14 +45,19 @@ void Player::PlayNextSong() {
         t.Print();
 
         history.push(t);
+        return;
     }
-    else {
-        std::cout << "\n No more songs to play.\n";
-    }
+
+    // 3. Both queues empty
+    std::cout << "\n No more songs to play.\n";
 }
 
-// Moves the previously played song back to the WishQueue
+
+
+//  PLAY PREVIOUS SONG (History → front of WishQueue)
+
 void Player::PlayPreviousSong() {
+
     if (history.empty()) {
         std::cout << "\n No songs in history.\n";
         return;
@@ -49,14 +66,23 @@ void Player::PlayPreviousSong() {
     Track last = history.top();
     history.pop();
 
-    wishQueue.push(last);
+    // Must go at FRONT of WishQueue
+    wishQueue.push_front(last);
 
-    std::cout << "\n Previous song added to WishQueue: ";
+    // Log into history again
+    history.push(last);
+
+    std::cout << "\n Previous song added to FRONT of WishQueue: ";
     last.Print();
 }
 
-// Displays play history (last played on top)
+
+
+
+//  HISTORY VIEW
+
 void Player::ShowHistory() const {
+
     if (history.empty()) {
         std::cout << "\n History is empty.\n";
         return;
@@ -64,11 +90,68 @@ void Player::ShowHistory() const {
 
     std::cout << "\n  Play History:\n";
 
-    // Create a copy so we don’t modify the real stack
     std::stack<Track> temp = history;
 
     while (!temp.empty()) {
         temp.top().Print();
         temp.pop();
     }
+}
+
+
+
+
+//  LIBRARY VIEW (Forward / Backward)
+
+void Player::ShowLibraryForward() const {
+
+    std::cout << "\n Library (forward):\n";
+
+    for (const auto& t : library)
+        t.Print();
+}
+
+void Player::ShowLibraryBackward() const {
+
+    std::cout << "\n Library (backward):\n";
+
+    for (auto it = library.rbegin(); it != library.rend(); ++it)
+        it->Print();
+}
+
+
+
+//  Add specific library song to queues
+
+void Player::AddLibrarySongToMainQueue(int index) {
+
+    if (index < 1 || index > library.size()) {
+        std::cout << "Invalid index.\n";
+        return;
+    }
+
+    auto it = library.begin();
+    std::advance(it, index - 1);
+
+    mainQueue.push(*it);
+
+    std::cout << "Added to Main Queue: ";
+    it->Print();
+}
+
+
+void Player::AddLibrarySongToWishQueue(int index) {
+
+    if (index < 1 || index > library.size()) {
+        std::cout << "Invalid index.\n";
+        return;
+    }
+
+    auto it = library.begin();
+    std::advance(it, index - 1);
+
+    wishQueue.push_back(*it);
+
+    std::cout << "Added to Wish Queue: ";
+    it->Print();
 }
