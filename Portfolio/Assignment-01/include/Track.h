@@ -2,7 +2,8 @@
 #include <string>
 #include <iostream>
 
-// Representerer en sang (track) i biblioteket.
+// Represents a song (track) in the library.
+
 class Track {
 public:
     std::string artist;

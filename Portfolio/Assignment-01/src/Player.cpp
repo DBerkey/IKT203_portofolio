@@ -1,26 +1,26 @@
 #include "Player.h"
 
-// Legger sang i biblioteket
+// Adds a track to the library
 void Player::AddToLibrary(const Track& track) {
     library.push_back(track);
 }
 
-//  HerFyller MainQueue med alle sanger fra biblioteket
+// Fills the main queue with all tracks from the library
 void Player::LoadToMainQueue() {
     for (const auto& t : library) {
         mainQueue.push(t);
     }
 }
 
-// Spiller neste sang:
-// 1. Hvis WishQueue har noe.... spill fra den først
-// 2. Hvis tom ... spill fra MainQueue
+// Plays the next song:
+// 1. If WishQueue is not empty .. play from WishQueue
+// 2. Otherwise .. play from MainQueue
 void Player::PlayNextSong() {
     if (!wishQueue.empty()) {
         Track t = wishQueue.front();
         wishQueue.pop();
 
-        std::cout << "\n Spiller fra WishQueue: ";
+        std::cout << "\n Playing from WishQueue: ";
         t.Print();
 
         history.push(t);
@@ -29,20 +29,20 @@ void Player::PlayNextSong() {
         Track t = mainQueue.front();
         mainQueue.pop();
 
-        std::cout << "\n Spiller fra MainQueue: ";
+        std::cout << "\n Playing from MainQueue: ";
         t.Print();
 
         history.push(t);
     }
     else {
-        std::cout << "\n Ingen flere sanger å spille.\n";
+        std::cout << "\n No more songs to play.\n";
     }
 }
 
-// Legger forrige sang tilbake i WishQueue (spilles neste gang)
+// Moves the previously played song back to the WishQueue
 void Player::PlayPreviousSong() {
     if (history.empty()) {
-        std::cout << "\n Ingen sanger i historikken.\n";
+        std::cout << "\n No songs in history.\n";
         return;
     }
 
@@ -51,20 +51,20 @@ void Player::PlayPreviousSong() {
 
     wishQueue.push(last);
 
-    std::cout << "\n Forrige sang ble lagt i WishQueue: ";
+    std::cout << "\n Previous song added to WishQueue: ";
     last.Print();
 }
 
-// Viser spillhistorikk (sist spilt øverst)
+// Displays play history (last played on top)
 void Player::ShowHistory() const {
     if (history.empty()) {
-        std::cout << "\n Historikken er tom.\n";
+        std::cout << "\n History is empty.\n";
         return;
     }
 
-    std::cout << "\n  Spillhistorikk:\n";
+    std::cout << "\n  Play History:\n";
 
-    // Lager kopi for å ikke ødelegge ekte stack
+    // Create a copy so we don’t modify the real stack
     std::stack<Track> temp = history;
 
     while (!temp.empty()) {

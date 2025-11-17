@@ -2,5 +2,5 @@
 
 class MusicApp {
 public:
-    void start();   // hovedfunksjon for programmet
+    void start();   // main function for the program
 };

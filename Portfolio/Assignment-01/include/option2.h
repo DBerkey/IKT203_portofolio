@@ -1,3 +1,3 @@
 #pragma once
 
-int RunApp(); // Kjørefunksjon for Assignment-01 . implementeres i option2.cpp
+int RunApp(); // Execution function for Assignment-01, implemented in option2.cpp

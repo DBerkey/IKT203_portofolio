@@ -5,10 +5,10 @@
 #include "Track.h"
 #include "SharedLib.h"
 
-// Global Player
+// Global Player instance
 static Player gPlayer;
 
-// Callback for SharedLib
+// Callback used by SharedLib when reading songs
 static bool SongReadCallback(
     const int aIndex,
     const int aTotalCount,
@@ -18,55 +18,64 @@ static bool SongReadCallback(
     const std::string& aGenre,
     const std::string& aSource)
 {
+    // Create track and add it to the player's library
     Track t(aArtist, aTitle, aYear, aGenre, aSource);
     gPlayer.AddToLibrary(t);
 
-    std::cout << "Lest sang " << (aIndex + 1) << "/" << aTotalCount
+    // Optional debug log
+    std::cout << "Loaded song " << (aIndex + 1) << "/" << aTotalCount
               << ": " << aTitle << " - " << aArtist << "\n";
 
     return true;
 }
 
-// Meny
+// Menu displayed to the user
 static void ShowMenu() {
     std::cout << "\n==== Console Music Player ====\n";
-    std::cout << "1. Spill neste sang\n";
-    std::cout << "2. Spill forrige sang\n";
-    std::cout << "3. Vis historikk\n";
-    std::cout << "4. Avslutt\n";
-    std::cout << "Valg: ";
+    std::cout << "1. Play next song\n";
+    std::cout << "2. Play previous song\n";
+    std::cout << "3. Show play history\n";
+    std::cout << "4. Exit\n";
+    std::cout << "Choice: ";
 }
 
 void MusicApp::start()
 {
+    
     std::string filename = "C:\\Users\\safwa\\IKT203_portofolio\\DATA\\songs.txt";
 
+    // Read all songs from file
     ReadSongsFromFile(filename, SongReadCallback);
 
+    // Load the library into the main play queue
     gPlayer.LoadToMainQueue();
 
-    int valg = 0;
+    int choice = 0;
 
     do {
         ShowMenu();
-        std::cin >> valg;
+        std::cin >> choice;
 
-        switch (valg) {
+        switch (choice) {
             case 1:
                 gPlayer.PlayNextSong();
                 break;
+
             case 2:
                 gPlayer.PlayPreviousSong();
                 break;
+
             case 3:
                 gPlayer.ShowHistory();
                 break;
+
             case 4:
-                std::cout << "Avslutter..\n";
+                std::cout << "Exiting...\n";
                 break;
+
             default:
-                std::cout << "Ugyldig valg.\n";
+                std::cout << "Invalid choice.\n";
         }
 
-    } while (valg != 4);
+    } while (choice != 4);
 }

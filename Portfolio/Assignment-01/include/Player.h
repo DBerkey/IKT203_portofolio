@@ -7,32 +7,32 @@
 
 #include "Track.h"
 
-// Player-klassen inneholder all logikk:
-//  bibliotek
+// The Player class contains all logic:
+//  library
 //  main queue
 //  wish queue
-//  historikk stack
+//  history stack
 //  play next / previous
 class Player {
 private:
-    std::list<Track> library;     // Hele sangbiblioteket
-    std::queue<Track> mainQueue;  // Hovedkø
-    std::queue<Track> wishQueue;  // Ønskekø
-    std::stack<Track> history;    // Historikk
+    std::list<Track> library;     // Main function of the program
+    std::queue<Track> mainQueue;  // Main queue
+    std::queue<Track> wishQueue;  // Wish queue
+    std::stack<Track> history;    // History
 
 public:
-    // Legg en sang inn i biblioteket
+    // Add a song to the library
     void AddToLibrary(const Track& track);
 
-    // Etter at biblioteket er fylt opp, last inn i mainQueue
+    // After the library is filled, load it into the mainQueue
     void LoadToMainQueue();
 
-    // Spill neste sang (WishQueue først, så MainQueue)
+    // Play the next song (WishQueue first, then MainQueue)
     void PlayNextSong();
 
-    // Legg forrige sang (fra historikk) tilbake i WishQueue
+    // Put the previous song (from the history) back into the WishQueue
     void PlayPreviousSong();
 
-    // Vis spillhistorikken
+    // Display the play history
     void ShowHistory() const;
 };
