@@ -27,7 +27,7 @@ static bool SongReadCallback(
     return true;
 }
 
-// ===== FULL MUSIC PLAYER MENU =====
+// FULL MUSIC PLAYER MENU 
 static void ShowMenu() {
     std::cout << "\n==== Console Music Player ====\n";
     std::cout << "1. Play next song\n";
@@ -44,15 +44,10 @@ static void ShowMenu() {
 
 void MusicApp::start()
 {
-    std::string filename ="DATA/song.txt";
+    std::string filename =
+        "C:\\Users\\safwa\\IKT203_portofolio\\DATA\\songs.txt";
 
-<<<<<<< HEAD
-    std::string filename = "DATA/songs.txt";
-
-    // Read all songs from file
-=======
     // Load songs from file into library
->>>>>>> dd9a693 (Updated Assignment-01 with final working version3)
     ReadSongsFromFile(filename, SongReadCallback);
 
     // Initially load library into MainQueue
@@ -63,14 +58,6 @@ void MusicApp::start()
     do {
         ShowMenu();
         std::cin >> choice;
-        // INVALID INPUT CHECK
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            std::cout << "Please enter a NUMBER between 1 and 9.\n";
-            choice = -1;
-            continue;
-        }
 
         switch (choice) {
 
