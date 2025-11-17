@@ -12,12 +12,6 @@ set(CMAKE_AUTOUIC OFF)
 # "ON" = Option 1, "OFF" = Option 2 (you are using Option 2)
 option(BUILD_ASSIGNMENT_01_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
 
-# SharedLib (located one folder up)
-add_subdirectory(
-        ${CMAKE_CURRENT_SOURCE_DIR}/../SharedLib
-        ${CMAKE_CURRENT_BINARY_DIR}/SharedLib_build
-)
-
 # Main file
 add_executable(Assignment-01
         main.cpp
