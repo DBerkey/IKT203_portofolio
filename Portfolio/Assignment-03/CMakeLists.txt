@@ -19,8 +19,6 @@ add_executable(Assignment-03
         src/Parser.cpp
         src/Interpreter.cpp
         src/RedBlackTree.cpp
-        include/RedBlackTree.h
-        include/RedBlackNode.h
 )
 target_include_directories(Assignment-03 PRIVATE include)
 
