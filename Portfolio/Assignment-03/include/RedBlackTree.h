@@ -9,6 +9,7 @@ public:
     RBNode *root;
 
     RedBlackTree();
+    ~RedBlackTree();
 
     static void SetLeft(RBNode *node, RBNode *parent);
 
