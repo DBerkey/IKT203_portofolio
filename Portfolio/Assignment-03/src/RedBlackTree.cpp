@@ -4,6 +4,19 @@ RedBlackTree::RedBlackTree() {
     root = nullptr;
 }
 
+// Helper to recursively delete all nodes (post-order)
+static void DestroyRB(RBNode* node) {
+    if (!node) return;
+    DestroyRB(node->left);
+    DestroyRB(node->right);
+    delete node;
+}
+
+RedBlackTree::~RedBlackTree() {
+    DestroyRB(root);
+    root = nullptr;
+}
+
 void RedBlackTree::SetLeft(RBNode* parent, RBNode* node) {
     parent->left = node;
     if (node) node->parent = parent;
