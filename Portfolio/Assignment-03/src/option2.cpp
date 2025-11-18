@@ -49,7 +49,7 @@ int RunApp()
             {
                 size_t pos = input.find('=');
                 std::string var = input.substr(0, pos);
-                
+
                 size_t s = var.find_first_not_of(" \t");
                 size_t e = var.find_last_not_of(" \t");
                 var = var.substr(s, e - s + 1);

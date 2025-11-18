@@ -150,7 +150,7 @@ Node *AVL::Search(Node *node, const std::string &key) {
 double AVL::searchValues(const std::string &key) const {
     Node *node = Search(root, key);
     if (node == nullptr) {
-        throw std::runtime_error("Error, no value.");
+        throw std::runtime_error("Variable '" + key + "' is not defined.");
     }
     return node->GetData();
 }

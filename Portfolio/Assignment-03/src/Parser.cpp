@@ -7,14 +7,41 @@ std::vector<std::string> Parser::Tokenize(const std::string &input) {
     std::vector<std::string> tokens;
     std::string currentToken;
 
-    for (char c : input) {
+    for (size_t i = 0; i < input.size(); ++i) {
+        char c = input[i];
 
-        // Skip spaces
+        // Whitespace with implicit multiplication (*)
         if (std::isspace(c)) {
             if (!currentToken.empty()) {
                 tokens.push_back(currentToken);
                 currentToken.clear();
             }
+
+            // Look ahead for implicit multiplication
+            size_t idx = i + 1;
+            while (idx < input.size() && std::isspace(input[idx])) {
+                idx++;
+            }
+
+            if (idx < input.size()) {
+                char next = input[idx];
+
+                bool lastIsValue =
+                    !tokens.empty() &&
+                    (std::isdigit(tokens.back()[0]) ||
+                     std::isalpha(tokens.back()[0]) ||
+                     tokens.back() == ")");
+
+                bool nextIsValue =
+                    (std::isdigit(next) ||
+                     std::isalpha(next) ||
+                     next == '(');
+
+                if (lastIsValue && nextIsValue) {
+                    tokens.push_back("*");
+                }
+            }
+
             continue;
         }
 
@@ -30,13 +57,27 @@ std::vector<std::string> Parser::Tokenize(const std::string &input) {
             continue;
         }
 
-        // Operator or parenthesis
+        // Finish token before operator or parenthesis
         if (!currentToken.empty()) {
             tokens.push_back(currentToken);
             currentToken.clear();
+
+            // Implicit multiplication without whitespace:
+            // value immediately followed by '('
+            if (c == '(') {
+                char prev = tokens.back()[0];
+                bool prevIsValue =
+                    std::isdigit(prev) ||
+                    std::isalpha(prev) ||
+                    prev == ')';
+
+                if (prevIsValue) {
+                    tokens.push_back("*");
+                }
+            }
         }
 
-        //Safety check
+        // Safety check
         if (!std::isdigit(c) && !std::isalpha(c) &&
             c != '+' && c != '-' && c != '*' && c != '/' && c != '^' &&
             c != '(' && c != ')')
@@ -44,15 +85,16 @@ std::vector<std::string> Parser::Tokenize(const std::string &input) {
             throw std::runtime_error(std::string("Invalid character: '") + c + "'");
         }
 
-        // Single character
-        std::string op(1,c);
-        tokens.push_back(op);
+        // Single operator/parenthesis
+        tokens.push_back(std::string(1, c));
     }
 
-    // Push last tokens, if remaining
+    // Push final token (if any)
     if (!currentToken.empty()) {
         tokens.push_back(currentToken);
+        currentToken.clear();
     }
+
     return tokens;
 }
 
@@ -248,6 +290,7 @@ double Parser::EvaluationTree(ExprNode *root, AVL& symbolTable) {
     if (std::isalpha(token[0])) {
         return symbolTable.searchValues(token);
     }
+
 
     // Operators
     double leftValue = EvaluationTree(root->left, symbolTable);

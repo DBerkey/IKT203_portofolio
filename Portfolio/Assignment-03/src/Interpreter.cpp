@@ -8,10 +8,12 @@ Interpreter::Interpreter() = default;
 
 // Removes whitespace before and after text
 static std::string Trim(const std::string& s) {
-    size_t start = s.find_first_not_of(" \t");
-    size_t end = s.find_last_not_of(" \t");
+    size_t start = s.find_first_not_of(" \t\r\n");
+    if (start == std::string::npos) {
+        return "";   // String is all whitespace
+    }
 
-    if (start == std::string::npos) return "";
+    size_t end = s.find_last_not_of(" \t\r\n");
     return s.substr(start, end - start + 1);
 }
 
