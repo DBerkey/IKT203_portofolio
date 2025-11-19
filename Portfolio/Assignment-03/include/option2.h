@@ -5,5 +5,4 @@
 
 int RunApp();
 
-
 #endif // OPTION2_H
