@@ -49,9 +49,6 @@ void MusicApp::start()
     // Load songs from file into library
     ReadSongsFromFile(filename, SongReadCallback);
 
-    // Initially load library into MainQueue
-    gPlayer.LoadToMainQueue();
-
     int choice = 0;
 
     do {

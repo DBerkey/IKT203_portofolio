@@ -58,22 +58,28 @@ void Player::PlayNextSong() {
 
 void Player::PlayPreviousSong() {
 
-    if (history.empty()) {
-        std::cout << "\n No songs in history.\n";
+    if (!history.empty()) {
+        // get second to last song from history
+        Track last = history.top();
+        
+        history.pop();
+    } else {
+        std::cout << "\n No history available.\n";
         return;
     }
 
-    Track last = history.top();
-    history.pop();
+    if (history.empty()) {
+        std::cout << "\n No previous song in history.\n";
+    } else {
+        Track secondLast = history.top();
 
-    // Must go at FRONT of WishQueue
-    wishQueue.push_front(last);
+        history.pop();
 
-    // Log into history again
-    history.push(last);
+        // Must go at FRONT of WishQueue
+        wishQueue.push_front(secondLast);
 
-    std::cout << "\n Previous song added to FRONT of WishQueue: ";
-    last.Print();
+        Player::PlayNextSong();
+    }
 }
 
 

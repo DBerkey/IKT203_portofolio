@@ -13,10 +13,10 @@ set(CMAKE_AUTOUIC OFF)
 option(BUILD_ASSIGNMENT_01_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
 
 
-# Main file
+# Main entry point. Option-specific sources are added below.
 add_executable(Assignment-01
-    main.cpp
- "song.cpp" "song.h" "songList.cpp" "songList.h")
+        main.cpp
+)
 
 # Include directories
 target_include_directories(Assignment-01 PRIVATE
