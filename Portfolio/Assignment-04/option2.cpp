@@ -78,7 +78,7 @@ int RunApp()
 	std::cout << AssignmentOption << std::endl;
 
 	// Try to use a relative path by default (adjust if your DATA folder is elsewhere)
-	std::string filename = "DATA/city_graph.txt";
+	std::string filename = "../DATA/city_graph.txt";
 	std::cout << "Reading graph from file: " << filename << "\n\n";
 
 	Graph graph;
